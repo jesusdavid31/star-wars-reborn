@@ -209,6 +209,17 @@ const HomePage = () => {
                                 </h1>
                             </div>
 
+                            <div className="death-star">
+                                <div className="wrapper">
+                                    <div className="lng"></div>
+                                    <div className="lng"></div>
+                                    <div className="lng"></div>
+                                    <div className="lng"></div>
+                                    <div className="trench"></div>
+                                    <div className="weapon"></div>
+                                </div>
+                            </div>
+
                             <div className='card-grid'>
                                 {characters.map((char) => (
                                     <div key={char.name} className="character-card">

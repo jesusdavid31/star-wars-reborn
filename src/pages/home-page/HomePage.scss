@@ -15,7 +15,7 @@
             width: 100%;
             width: auto;
             max-width: 1200px;
-            margin-top: 20px;
+            margin-top: 73px;
             margin-bottom: 50px;
 
             @media (max-width: 650px) {
@@ -218,108 +218,189 @@
                 }
 
                 .curved-corner-star {
-                display: flex;
-                position: relative;
+                    display: flex;
+                    position: relative;
                 }
 
                 #curved-corner-bottomleft,
                 #curved-corner-bottomright,
                 #curved-corner-topleft,
                 #curved-corner-topright {
-                width: 4px;
-                height: 5px;
-                overflow: hidden;
-                position: relative;
+                    width: 4px;
+                    height: 5px;
+                    overflow: hidden;
+                    position: relative;
                 }
 
                 #curved-corner-bottomleft:before,
                 #curved-corner-bottomright:before,
                 #curved-corner-topleft:before,
                 #curved-corner-topright:before {
-                content: "";
-                display: block;
-                width: 200%;
-                height: 200%;
-                position: absolute;
-                border-radius: 50%;
+                    content: "";
+                    display: block;
+                    width: 200%;
+                    height: 200%;
+                    position: absolute;
+                    border-radius: 50%;
                 }
 
                 #curved-corner-bottomleft:before {
-                bottom: 0;
-                left: 0;
-                box-shadow: -5px 5px 0 0 white;
+                    bottom: 0;
+                    left: 0;
+                    box-shadow: -5px 5px 0 0 white;
                 }
 
                 #curved-corner-bottomright:before {
-                bottom: 0;
-                right: 0;
-                box-shadow: 5px 5px 0 0 white;
+                    bottom: 0;
+                    right: 0;
+                    box-shadow: 5px 5px 0 0 white;
                 }
 
                 #curved-corner-topleft:before {
-                top: 0;
-                left: 0;
-                box-shadow: -5px -5px 0 0 white;
+                    top: 0;
+                    left: 0;
+                    box-shadow: -5px -5px 0 0 white;
                 }
 
                 #curved-corner-topright:before {
-                top: 0;
-                right: 0;
-                box-shadow: 5px -5px 0 0 white;
+                    top: 0;
+                    right: 0;
+                    box-shadow: 5px -5px 0 0 white;
                 }
 
                 @keyframes twinkling {
-                0%,
-                100% {
-                    opacity: 0.1;
-                }
-                50% {
-                    opacity: 1;
-                }
+                    0%,
+                    100% {
+                        opacity: 0.1;
+                    }
+                    50% {
+                        opacity: 1;
+                    }
                 }
 
                 #star-1 {
-                position: absolute;
-                left: -20px;
-                animation: twinkling 3s infinite;
+                    position: absolute;
+                    left: -20px;
+                    animation: twinkling 3s infinite;
                 }
 
                 #star-2 {
-                position: absolute;
-                left: -40px;
-                top: 30px;
-                animation: twinkling 2s infinite;
+                    position: absolute;
+                    left: -40px;
+                    top: 30px;
+                    animation: twinkling 2s infinite;
                 }
                 #star-3 {
-                position: absolute;
-                left: 350px;
-                top: 90px;
-                animation: twinkling 4s infinite;
+                    position: absolute;
+                    left: 350px;
+                    top: 90px;
+                    animation: twinkling 4s infinite;
                 }
                 #star-4 {
-                position: absolute;
-                left: 200px;
-                top: 290px;
-                animation: twinkling 3s infinite;
+                    position: absolute;
+                    left: 200px;
+                    top: 290px;
+                    animation: twinkling 3s infinite;
                 }
                 #star-5 {
-                position: absolute;
-                left: 50px;
-                top: 270px;
-                animation: twinkling 1.5s infinite;
+                    position: absolute;
+                    left: 50px;
+                    top: 270px;
+                    animation: twinkling 1.5s infinite;
                 }
 
                 #star-6 {
-                position: absolute;
-                left: 250px;
-                top: -50px;
-                animation: twinkling 4s infinite;
+                    position: absolute;
+                    left: 250px;
+                    top: -50px;
+                    animation: twinkling 4s infinite;
                 }
                 #star-7 {
+                    position: absolute;
+                    left: 290px;
+                    top: 60px;
+                    animation: twinkling 2s infinite;
+                }
+            }
+
+            .death-star {
+                background-image:linear-gradient(#99a .5vmin, transparent .5vmin), linear-gradient(to right, #99a, #334);
+                border-radius:50%;
+                width: 40vmin;
+                height: 40vmin;
+                margin: 20vmin;
+                perspective: 1000vmin;
+                perspective-origin: 50%;
+                // position:relative;
                 position: absolute;
-                left: 290px;
-                top: 60px;
-                animation: twinkling 2s infinite;
+                z-index: -1;
+                top: -4rem;
+                right: -18rem;
+
+                .wrapper {
+                    height:100%;
+                    left:0;
+                    overflow:hidden;
+                    position:absolute;
+                    top:0;
+                    transform-style: preserve-3d;
+                    width:100%;
+                    z-index:0;
+                    &:after {
+                        box-shadow:-25vmin 0 25vmin #000 inset;
+                        content:"";
+                        height:100%;
+                        left:0;
+                        position:absolute;
+                        top:0;
+                        width:100%;
+                        border-radius: 50%; // 👈 Esto lo hace circular
+                    }
+                    .trench {
+                        border-bottom:solid 2vmin #99a;
+                        border-top:solid 2vmin #99a;
+                        box-shadow:0 1vmin 1vmin transparent inset;
+                        box-sizing:content-box;
+                        height: 2%;         // 👈 relativo al tamaño del círculo
+                        left:0;
+                        // opacity:.5;
+                        position:absolute;
+                        top: 47%;           // 👈 mitad del círculo aprox.
+                        width:98%;
+                    }
+                    .lng {
+                        border-left:solid 1px #99a;
+                        border-radius:50%;
+                        height:100%;
+                        left:0;
+                        position:absolute;
+                        top:0;
+                        width:100%;
+                        &:nth-child(1) {
+                            border-width:1vmin;
+                            transform:rotateY(30deg);
+                        }
+                        &:nth-child(2) {
+                            border-width:2vmin;
+                            transform:rotateY(70deg);
+                        }
+                        &:nth-child(3) {
+                            border-width:2vmin;
+                            transform:rotateY(110deg);
+                        }
+                    }
+                    .weapon {
+                        background-image:linear-gradient(to right, #334, #667);
+                        border-radius:50%;
+                        box-shadow:0 -2vmin 2vmin rgba(255,255,255,.25) inset;
+                        height:20%;
+                        left:40%;
+                        position:absolute;
+                        top:20%;
+                        transform:rotateY(-25deg) translateZ(25vmin) rotateX(21deg);
+                        width:20%;
+                        z-index:1;
+                    }
                 }
             }
 
