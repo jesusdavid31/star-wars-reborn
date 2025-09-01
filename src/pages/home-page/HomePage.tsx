@@ -12,6 +12,7 @@ import './HomePage.scss';
 const HomePage = () => {
 
     const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     // usamos el hook pasándole la página actual
     const { getCharacters, characters, loading, total } = useCharacters();
@@ -27,9 +28,12 @@ const HomePage = () => {
     };
 
     useEffect(() => {
-        console.log(total);
         const controller = new AbortController(); // crear el abort controller para hacer un seguro anti-fetches viejos
         getCharacters(page, 10, controller.signal); // pasamos el signal al hook
+        if (page > 1){
+            setTotalPages(Math.ceil(total / 10));
+            console.log(Math.ceil(total / 10));
+        }
         return () => controller.abort(); // cancelar cuando cambie de página o se desmonte
     }, [page, getCharacters]);
 
@@ -277,7 +281,9 @@ const HomePage = () => {
                                     </button>
                                 )}
                                 <span style={{ margin: "0 1rem" }}>Página {page}</span>
-                                <button onClick={() => goToNextPage()}>Siguiente</button>
+                                {page <= totalPages && (
+                                    <button onClick={() => goToNextPage()}>Siguiente</button>
+                                )}
                             </div>
                             
                         </div>
