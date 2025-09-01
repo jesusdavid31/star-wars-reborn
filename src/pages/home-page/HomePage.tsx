@@ -14,7 +14,7 @@ const HomePage = () => {
     const [page, setPage] = useState(1);
 
     // usamos el hook pasándole la página actual
-    const { getCharacters, characters, loading } = useCharacters();
+    const { getCharacters, characters, loading, total } = useCharacters();
 
     const goToPreviousPage = () => {
         if (page > 1) {
@@ -27,8 +27,11 @@ const HomePage = () => {
     };
 
     useEffect(() => {
-        getCharacters(page);
-    }, [page]);
+        console.log(total);
+        const controller = new AbortController(); // crear el abort controller para hacer un seguro anti-fetches viejos
+        getCharacters(page, 10, controller.signal); // pasamos el signal al hook
+        return () => controller.abort(); // cancelar cuando cambie de página o se desmonte
+    }, [page, getCharacters]);
 
     return (
         <div className="home-page">
@@ -36,8 +39,22 @@ const HomePage = () => {
                 <Galaxy starSpeed={0.2}  speed={0.5} rotationSpeed={0.2} density={0.7} mouseInteraction={false} mouseRepulsion={false} />
                 <div className="home-page-container">
                     { loading ? (
-                        <div className="spinner">
-                            <div className="spinnerin"></div>
+                        <div
+                            style={{ minHeight: 400, display: 'grid', placeItems: 'center' }}
+                            aria-busy="true"
+                            aria-live="polite"
+                        >
+                            <div className="solar">
+                                <i className="mercury"></i>
+                                <i className="venus"></i>
+                                <i className="earth"></i>
+                                <i className="mars"></i>
+                                <i className="belt"></i>
+                                <i className="jupiter"></i>
+                                <i className="saturn"></i>
+                                <i className="uranus"></i>
+                                <i className="neptune"></i>
+                            </div>
                         </div>
                     ) : (
                         <div className="card-container">
@@ -224,26 +241,41 @@ const HomePage = () => {
                                 {characters.map((char) => (
                                     <div key={char.name} className="character-card">
                                         <div className="image-wrapper">
-                                        <img src={char.image} alt={char.name} />
+                                            <img src={char.image} alt={char.name} loading="lazy" decoding="async" />
                                         </div>
                                         <div className="info">
-                                        <h2>{char.name}</h2>
-                                        {/* <p><strong>Species:</strong> {char.species}</p> */}
-                                        <p><strong>Gender:</strong> {char.gender}</p>
-                                        <p><strong>Height:</strong> {char.height}</p>
-                                        <p><strong>Mass:</strong> {char.mass}</p>
-                                        <p><strong>Hair Color:</strong> {char.hair_color}</p>
-                                        <p><strong>Skin Color:</strong> {char.skin_color}</p>
-                                        <p><strong>Eye Color:</strong> {char.eye_color}</p>
+                                            <h2>{char.name}</h2>
+                                            <p><strong>Gender:</strong> {char.gender}</p>
+                                            <p><strong>Height:</strong> {char.height}</p>
+                                            <p><strong>Mass:</strong> {char.mass}</p>
+                                            <p><strong>Hair Color:</strong> {char.hair_color}</p>
+                                            <p><strong>Skin Color:</strong> {char.skin_color}</p>
+                                            <p><strong>Eye Color:</strong> {char.eye_color}</p>
+                                            <div className="button-container">
+                                                {/* From Uiverse.io by StealthWorm */}
+                                                <button type="button" className="btn">
+                                                    <strong>See more</strong>
+                                                    <div id="container-stars">
+                                                        <div id="stars"></div>
+                                                    </div>
+
+                                                    <div id="glow">
+                                                        <div className="circle"></div>
+                                                        <div className="circle"></div>
+                                                    </div>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
                             </div>
                             
                             <div className="pagination-buttons">
-                                <button onClick={() => goToPreviousPage()}>
-                                Anterior
-                                </button>
+                                {page > 1 && (
+                                    <button onClick={() => goToPreviousPage()}>
+                                        Anterior
+                                    </button>
+                                )}
                                 <span style={{ margin: "0 1rem" }}>Página {page}</span>
                                 <button onClick={() => goToNextPage()}>Siguiente</button>
                             </div>
