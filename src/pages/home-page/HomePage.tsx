@@ -1,18 +1,23 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 
-import { useCharacters } from "./hooks/useCharacters"; // importa el hook
+import { useCharacters, type Character } from "./hooks/useCharacters"; // importa el hook
 
 // Components
 import Galaxy from "../../components/galaxy/Galaxy";
+import InfoModal from "./components/InfoModal";
+
+// Helpers
+import { normalizeValue } from "../../helpers/normalize-value";
 
 // ESTILOS
 import './HomePage.scss';
 
 const HomePage = () => {
 
+    const [open, setOpen] = useState(false);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [character, setCharacter] = useState<Character | null>(null);
 
     // usamos el hook pasándole la página actual
     const { getCharacters, characters, loading, total } = useCharacters();
@@ -30,12 +35,12 @@ const HomePage = () => {
     useEffect(() => {
         const controller = new AbortController(); // crear el abort controller para hacer un seguro anti-fetches viejos
         getCharacters(page, 10, controller.signal); // pasamos el signal al hook
-        if (page > 1){
-            setTotalPages(Math.ceil(total / 10));
-            console.log(Math.ceil(total / 10));
-        }
         return () => controller.abort(); // cancelar cuando cambie de página o se desmonte
     }, [page, getCharacters]);
+
+    useEffect(() => {
+        setTotalPages(Math.ceil(total / 10));
+    }, [total]);
 
     return (
         <div className="home-page">
@@ -249,15 +254,18 @@ const HomePage = () => {
                                         </div>
                                         <div className="info">
                                             <h2>{char.name}</h2>
-                                            <p><strong>Gender:</strong> {char.gender}</p>
-                                            <p><strong>Height:</strong> {char.height}</p>
-                                            <p><strong>Mass:</strong> {char.mass}</p>
-                                            <p><strong>Hair Color:</strong> {char.hair_color}</p>
-                                            <p><strong>Skin Color:</strong> {char.skin_color}</p>
-                                            <p><strong>Eye Color:</strong> {char.eye_color}</p>
+                                            <p><strong>Gender:</strong> {normalizeValue(char.gender)}</p>
+                                            <p><strong>Height:</strong> {normalizeValue(char.height)}</p>
+                                            <p><strong>Mass:</strong> {normalizeValue(char.mass)}</p>
+                                            <p><strong>Hair Color:</strong> {normalizeValue(char.hair_color)}</p>
+                                            <p><strong>Skin Color:</strong> {normalizeValue(char.skin_color)}</p>
+                                            <p><strong>Eye Color:</strong> {normalizeValue(char.eye_color)}</p>
                                             <div className="button-container">
                                                 {/* From Uiverse.io by StealthWorm */}
-                                                <button type="button" className="btn">
+                                                <button type="button" className="btn" onClick={() => {
+                                                    setOpen(true);
+                                                    setCharacter(char);
+                                                }}>
                                                     <strong>See more</strong>
                                                     <div id="container-stars">
                                                         <div id="stars"></div>
@@ -277,18 +285,23 @@ const HomePage = () => {
                             <div className="pagination-buttons">
                                 {page > 1 && (
                                     <button onClick={() => goToPreviousPage()}>
-                                        Anterior
+                                        Previous
                                     </button>
                                 )}
-                                <span style={{ margin: "0 1rem" }}>Página {page}</span>
-                                {page <= totalPages && (
-                                    <button onClick={() => goToNextPage()}>Siguiente</button>
+                                <span style={{ margin: "0 1rem" }}>Page {page}</span>
+                                {page < totalPages && (
+                                    <button onClick={() => goToNextPage()}>Next</button>
                                 )}
                             </div>
                             
                         </div>
                     )}
                 </div>
+                <InfoModal
+                    isOpen={open}
+                    onClose={() => setOpen(false)}
+                    character={character}
+                />
             </div>
         </div>
     );

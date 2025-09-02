@@ -44,7 +44,7 @@ const safeMass = (m: string) => {
 
 export const useCharacters = () => {
     const [characters, setCharacters] = useState<Character[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     // Cache del listado base (people) para paginar en memoria
@@ -64,7 +64,7 @@ export const useCharacters = () => {
             for (const u of ch.species || []) if (!urlCache.has(u)) return true;
             for (const u of ch.films   || []) if (!urlCache.has(u)) return true;
         }
-        // todo ya está cacheado en TU Map, no hace falta loader
+        // Ya todo está cacheado en mi Map, no hace falta loader
         return false; 
     };
 
@@ -190,6 +190,6 @@ export const useCharacters = () => {
         loading,
         error,
         total: allPeopleRef.current?.length ?? 0,
-        clearCaches, // por si quieres forzar refetch en algún momento
+        clearCaches, // por si queremos forzar refetch en algún momento
     };
 };

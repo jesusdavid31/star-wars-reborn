@@ -1,0 +1,280 @@
+// Paleta Star Wars
+$sw-yellow: #fcd000;
+$sw-yellow-glow: #ffe066;
+$sw-bg: #05070a;
+$sw-panel: #0c0f14;
+$sw-border: #2d2d2d;
+$sw-text: #e6e6e6;
+$sw-muted: #a9b0b8;
+
+.sw-modal__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .6);
+    backdrop-filter: blur(2px);
+    display: grid;
+    place-items: center;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.sw-modal__hyperspace {
+    position: absolute;
+    inset: -10%;
+    pointer-events: none;
+    background:
+        radial-gradient(transparent 0, transparent 60%, rgba(255,255,255,.06) 61%) center/200% 200%,
+        repeating-linear-gradient(90deg, rgba(255,255,255,.25) 0 1px, transparent 1px 3px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.15) 0 1px, transparent 1px 4px);
+    transform: translateZ(0);
+    animation: hyperdrive 2.6s linear infinite;
+    opacity: .25;
+
+    @keyframes hyperdrive {
+        0%   { transform: translateZ(0) translateY(0); }
+        100% { transform: translateZ(0) translateY(-200px); }
+    }
+}
+
+.sw-modal__container {
+    position: relative;
+    width: min(940px, calc(100vw - 24px));
+    max-height: calc(100vh - 24px);
+    background: linear-gradient(180deg, $sw-panel 0%, darken($sw-panel, 3%) 100%);
+    border: 1px solid $sw-border;
+    border-radius: 16px;
+    color: $sw-text;
+    overflow: hidden;
+    box-shadow:
+        0 0 0 2px rgba(252, 208, 0, .2),
+        0 10px 50px rgba(0,0,0,.65),
+        0 0 40px rgba(252, 208, 0, .12) inset;
+}
+
+.sw-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid $sw-border;
+    background:
+        linear-gradient(90deg, rgba(252,208,0,.15), rgba(252,208,0,0) 40%),
+        transparent;
+}
+
+.sw-modal__title {
+    font-size: 1.4rem;
+    color: $sw-yellow;
+    text-shadow: 0 0 8px rgba(252, 208, 0, .45);
+    margin: 0;
+}
+
+.sw-modal__close {
+    appearance: none;
+    border: 1px solid $sw-border;
+    background: #111417;
+    color: $sw-text;
+    border-radius: 10px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+
+    &:hover {
+        border-color: $sw-yellow;
+        box-shadow: 0 0 0 2px rgba(252,208,0,.2);
+    }
+    &:active {
+        transform: scale(.96);
+    }
+}
+
+.sw-modal__tabs {
+    display: flex;
+    gap: 8px;
+    padding: 10px 12px;
+    border-bottom: 1px solid $sw-border;
+    background: #0b0e12;
+}
+
+.sw-modal__tab {
+    border: 1px solid $sw-border;
+    background: #0f1318;
+    color: $sw-muted;
+    padding: 8px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: border-color .2s ease, color .2s ease, box-shadow .2s ease;
+
+    &.is-active {
+        color: $sw-yellow;
+        border-color: $sw-yellow;
+        box-shadow: 0 0 0 2px rgba(252,208,0,.15);
+    }
+}
+
+.sw-modal__content {
+    padding: 16px;
+    overflow: auto;
+    max-height: calc(100vh - 56px - 46px - 56px); // header + tabs + footer
+}
+
+.sw-modal__grid {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 16px;
+
+    @media (max-width: 800px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sw-modal__portrait {
+    border: 1px solid $sw-border;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0b0e12;
+
+    img {
+        display: block;
+        width: 100%;
+        height: 340px;
+        object-fit: cover;
+    }
+}
+
+.sw-modal__specs {
+    list-style: none;
+    margin: 0;
+    padding: 12px;
+    border: 1px solid $sw-border;
+    border-radius: 12px;
+    background: #0b0e12;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 8px 14px;
+
+    li {
+        color: $sw-text;
+    }
+    strong {
+        color: $sw-yellow;
+    }
+}
+
+.sw-modal__panel {
+    grid-column: 1 / -1;
+    margin-top: 12px;
+    border: 1px solid $sw-border;
+    border-radius: 12px;
+    background: #0b0e12;
+    padding: 12px;
+
+    h3 {
+        margin: 0 0 8px;
+        color: $sw-yellow;
+        font-size: 1.05rem;
+    }
+}
+
+.sw-modal__muted {
+    color: $sw-muted;
+}
+
+.sw-modal__chips {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+}
+
+.sw-chip {
+    border: 1px solid $sw-border;
+    border-radius: 10px;
+    background: #0f1318;
+    padding: 8px 10px;
+    display: grid;
+    gap: 4px;
+
+    &__title {
+        color: $sw-yellow;
+        font-weight: 600;
+    }
+    &__meta {
+        color: $sw-muted;
+        font-size: .9rem;
+    }
+}
+
+.sw-modal__films {
+    .sw-film-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 10px;
+    }
+
+    .sw-film {
+        display: grid;
+        grid-template-columns: 88px 1fr;
+        border: 1px solid $sw-border;
+        border-radius: 12px;
+        background: #0b0e12;
+        overflow: hidden;
+
+        &__ep {
+            display: grid;
+            place-items: center;
+            background:
+                linear-gradient(180deg, rgba(252,208,0,.1), rgba(252,208,0,0));
+            color: $sw-yellow;
+            font-weight: 700;
+            border-right: 1px solid $sw-border;
+        }
+
+        &__body {
+            padding: 10px 12px;
+        }
+
+        &__title {
+            margin: 0 0 4px;
+            color: $sw-text;
+            font-size: 1.05rem;
+        }
+
+        &__meta {
+            color: $sw-muted;
+            font-size: .92rem;
+        }
+    }
+}
+
+.sw-modal__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 12px 16px;
+    border-top: 1px solid $sw-border;
+    background: #0b0e12;
+}
+
+.sw-modal__cta {
+    appearance: none;
+    border: 1px solid $sw-yellow;
+    background: #12161b;
+    color: $sw-yellow;
+    padding: 8px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+
+    &:hover {
+        background: #101419;
+        box-shadow: 0 0 0 3px rgba(252,208,0,.15);
+    }
+    &:active {
+        transform: translateY(1px);
+    }
+}

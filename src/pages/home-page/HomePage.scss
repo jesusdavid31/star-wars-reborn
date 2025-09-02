@@ -7,6 +7,7 @@
     .home-page-container {
         position: relative;
         max-width: 1200px;
+        min-height: inherit;
         z-index: 10; // 🔥 se asegura de quedar encima del fondo
         margin: 0 auto;
         padding: 80px 20px;
