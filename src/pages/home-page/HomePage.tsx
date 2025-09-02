@@ -16,11 +16,11 @@ const HomePage = () => {
 
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(2);
+    // const [totalPages, setTotalPages] = useState(2);
     const [character, setCharacter] = useState<Character | null>(null);
 
     // usamos el hook pasándole la página actual
-    const { getCharacters, characters, loading, total = 0 } = useCharacters();
+    const { getCharacters, characters, loading } = useCharacters();
 
     const goToPreviousPage = () => {
         if (page > 1) {
@@ -38,9 +38,9 @@ const HomePage = () => {
         return () => controller.abort(); // cancelar cuando cambie de página o se desmonte
     }, [page, getCharacters]);
 
-    useEffect(() => {
-        setTotalPages(Math.ceil(total / 10));
-    }, [total]);
+    // useEffect(() => {
+    //     setTotalPages(Math.ceil(total / 10));
+    // }, [total]);
 
     return (
         <div className="home-page">
@@ -289,9 +289,9 @@ const HomePage = () => {
                                     </button>
                                 )}
                                 <span style={{ margin: "0 1rem" }}>Page {page}</span>
-                                {page < totalPages && (
+                                {/* {page < totalPages && ( */}
                                     <button onClick={() => goToNextPage()}>Next</button>
-                                )}
+                                {/* )} */}
                             </div>
                             
                         </div>
