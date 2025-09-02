@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import { useCharacters, type Character } from "./hooks/useCharacters"; // importa el hook
 
@@ -16,11 +16,10 @@ const HomePage = () => {
 
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(1);
-    // const [totalPages, setTotalPages] = useState(2);
     const [character, setCharacter] = useState<Character | null>(null);
 
     // usamos el hook pasándole la página actual
-    const { getCharacters, characters, loading } = useCharacters();
+    const { getCharacters, characters, loading, total = 0 } = useCharacters();
 
     const goToPreviousPage = () => {
         if (page > 1) {
@@ -38,9 +37,12 @@ const HomePage = () => {
         return () => controller.abort(); // cancelar cuando cambie de página o se desmonte
     }, [page, getCharacters]);
 
-    // useEffect(() => {
-    //     setTotalPages(Math.ceil(total / 10));
-    // }, [total]);
+    const totalPages = useMemo(() => {
+        const t = Number.isFinite(Number(total)) ? Number(total) : 0;
+        const pages = Math.ceil(t / 10);
+        // si la API aún no respondió, mantenemos al menos 1 para no romper la UI
+        return Math.max(1, pages || 1);
+    }, [total]);
 
     return (
         <div className="home-page">
@@ -289,9 +291,9 @@ const HomePage = () => {
                                     </button>
                                 )}
                                 <span style={{ margin: "0 1rem" }}>Page {page}</span>
-                                {/* {page < totalPages && ( */}
+                                {(page < totalPages && totalPages > 0) && (
                                     <button onClick={() => goToNextPage()}>Next</button>
-                                {/* )} */}
+                                )}
                             </div>
                             
                         </div>
