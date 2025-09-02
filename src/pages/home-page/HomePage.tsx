@@ -16,7 +16,7 @@ const HomePage = () => {
 
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
+    const [totalPages, setTotalPages] = useState(2);
     const [character, setCharacter] = useState<Character | null>(null);
 
     // usamos el hook pasándole la página actual
