@@ -1,3 +1,4 @@
+@use "sass:color";
 // Paleta Star Wars
 $sw-yellow: #fcd000;
 $sw-yellow-glow: #ffe066;
@@ -40,7 +41,7 @@ $sw-muted: #a9b0b8;
     position: relative;
     width: min(940px, calc(100vw - 24px));
     max-height: calc(100vh - 24px);
-    background: linear-gradient(180deg, $sw-panel 0%, darken($sw-panel, 3%) 100%);
+    background: linear-gradient(180deg, #0c0f14 0%, color.adjust(#0c0f14, $lightness: -3%) 100%);
     border: 1px solid $sw-border;
     border-radius: 16px;
     color: $sw-text;
