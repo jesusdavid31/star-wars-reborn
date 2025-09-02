@@ -20,7 +20,7 @@ const HomePage = () => {
     const [character, setCharacter] = useState<Character | null>(null);
 
     // usamos el hook pasándole la página actual
-    const { getCharacters, characters, loading, total } = useCharacters();
+    const { getCharacters, characters, loading, total = 0 } = useCharacters();
 
     const goToPreviousPage = () => {
         if (page > 1) {
