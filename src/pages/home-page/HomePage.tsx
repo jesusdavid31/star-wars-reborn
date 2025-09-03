@@ -47,7 +47,17 @@ const HomePage = () => {
     return (
         <div className="home-page">
             <div style={{ width: '100%', height: 'auto', position: 'relative' }}>
-                <Galaxy starSpeed={0.2}  speed={0.5} rotationSpeed={0.2} density={0.7} mouseInteraction={false} mouseRepulsion={false} />
+
+                <Galaxy 
+                    starSpeed={0.2}  
+                    disableAnimation={window.innerWidth > 768 ? false : true}
+                    speed={0.5} 
+                    rotationSpeed={0.2} 
+                    density={0.7} 
+                    mouseInteraction={false} 
+                    mouseRepulsion={false} 
+                />
+
                 <div className="home-page-container">
                     { loading ? (
                         <div
