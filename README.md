@@ -98,7 +98,7 @@ pnpm gh-deploy
 
 1. Clona el repo:
    ```bash
-   git clone https://github.com/tuusuario/star-wars-app.git
+   git clone https://github.com/jesusdavid31/star-wars-reborn.git
    cd star-wars-app
    ```
 
