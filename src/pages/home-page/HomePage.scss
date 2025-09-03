@@ -717,8 +717,15 @@
 
     @media screen and (max-width: 768px) {
 
+        .section-banner-sun,
+        .section-banner-earth {
+            animation: none !important;
+            box-shadow: none !important;
+            background: none !important;
+        }
+
         .death-star {
-            display: none;
+            display: none !important;
         }
 
         .pagination-buttons {
@@ -729,6 +736,16 @@
                 margin-bottom: 10px;
                 margin-top: 10px;
             }
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .section-banner-sun,
+        .section-banner-earth,
+        .solar,
+        .death-star {
+            animation: none !important;
+            transition: none !important;
         }
     }
 }

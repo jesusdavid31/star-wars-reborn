@@ -37,6 +37,8 @@ const HomePage = () => {
         return () => controller.abort(); // cancelar cuando cambie de página o se desmonte
     }, [page, getCharacters]);
 
+    const isMobile = typeof window !== 'undefined' && matchMedia('(pointer: coarse)').matches;
+
     const totalPages = useMemo(() => {
         const t = Number.isFinite(Number(total)) ? Number(total) : 0;
         const pages = Math.ceil(t / 10);
@@ -49,13 +51,13 @@ const HomePage = () => {
             <div style={{ width: '100%', height: 'auto', position: 'relative' }}>
 
                 <Galaxy 
-                    starSpeed={0.2}  
-                    disableAnimation={window.innerWidth > 768 ? false : true}
-                    speed={0.5} 
-                    rotationSpeed={0.2} 
-                    density={0.7} 
-                    mouseInteraction={false} 
-                    mouseRepulsion={false} 
+                    disableAnimation={isMobile ? true : false}
+                    starSpeed={isMobile ? 0.05 : 0.2}
+                    speed={isMobile ? 0.2 : 0.5}
+                    rotationSpeed={isMobile ? 0.05 : 0.2}
+                    density={isMobile ? 0.35 : 0.7}
+                    mouseInteraction={!isMobile && false}
+                    mouseRepulsion={!isMobile && false}
                 />
 
                 <div className="home-page-container">
